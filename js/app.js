@@ -43,9 +43,11 @@ year.addEventListener('change', e =>{
 });
 minimo.addEventListener('change', e =>{
     datosBusqueda.minimo = parseInt(e.target.value);
+    filtrarAuto();
 });
 maximo.addEventListener('change', e =>{
     datosBusqueda.maximo = parseInt(e.target.value);
+    filtrarAuto();
 });
 puertas.addEventListener('change', e =>{
     datosBusqueda.puertas = parseInt(e.target.value);
@@ -91,7 +93,7 @@ function llenarSelect(){
 
 //Funcion que filtra en base a la busqueda
 function filtrarAuto(){
-    const resultado = autos.filter(filtrarMarca).filter(filtrarYear);// funcion de alto nivel - soportan chainlink
+    const resultado = autos.filter(filtrarMarca).filter(filtrarYear).filter(filtrarMinimo).filter(filtrarMaximo);// funcion de alto nivel - soportan chainlink
     //console.log(resultado);
     mostrarAutos(resultado);
 }
@@ -109,6 +111,22 @@ function filtrarYear(auto){
     const {year} = datosBusqueda;
     if(year){//Si no esta vacia
         return auto.year === year;
+    }
+    return auto;//Si no selecciona nada retorno el auto completo
+}
+
+function filtrarMinimo(auto){
+    const {minimo} = datosBusqueda;
+    if(minimo){//Si no esta vacia
+        return auto.precio >= minimo;
+    }
+    return auto;//Si no selecciona nada retorno el auto completo
+}
+
+function filtrarMaximo(auto){
+    const {maximo} = datosBusqueda;
+    if(maximo){//Si no esta vacia
+        return auto.precio <= maximo;
     }
     return auto;//Si no selecciona nada retorno el auto completo
 }
