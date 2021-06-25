@@ -51,12 +51,15 @@ maximo.addEventListener('change', e =>{
 });
 puertas.addEventListener('change', e =>{
     datosBusqueda.puertas = parseInt(e.target.value);
+    filtrarAuto();
 });
 transmision.addEventListener('change', e =>{
     datosBusqueda.transmision = e.target.value;
+    filtrarAuto();
 });
 color.addEventListener('change', e =>{
     datosBusqueda.color = e.target.value;
+    filtrarAuto();
 });
 
 
@@ -93,7 +96,7 @@ function llenarSelect(){
 
 //Funcion que filtra en base a la busqueda
 function filtrarAuto(){
-    const resultado = autos.filter(filtrarMarca).filter(filtrarYear).filter(filtrarMinimo).filter(filtrarMaximo);// funcion de alto nivel - soportan chainlink
+    const resultado = autos.filter(filtrarMarca).filter(filtrarYear).filter(filtrarMinimo).filter(filtrarMaximo).filter(filtrarPuertas).filter(filtrarTransmision).filter(filtrarColor);// funcion de alto nivel - soportan chainlink
     //console.log(resultado);
     mostrarAutos(resultado);
 }
@@ -127,6 +130,30 @@ function filtrarMaximo(auto){
     const {maximo} = datosBusqueda;
     if(maximo){//Si no esta vacia
         return auto.precio <= maximo;
+    }
+    return auto;//Si no selecciona nada retorno el auto completo
+}
+
+function filtrarPuertas(auto){
+    const {puertas} = datosBusqueda;
+    if(puertas){//Si no esta vacia
+        return auto.puertas === puertas;
+    }
+    return auto;//Si no selecciona nada retorno el auto completo
+}
+
+function filtrarTransmision(auto){
+    const {transmision} = datosBusqueda;
+    if(transmision){//Si no esta vacia
+        return auto.transmision === transmision;
+    }
+    return auto;//Si no selecciona nada retorno el auto completo
+}
+
+function filtrarColor(auto){
+    const {color} = datosBusqueda;
+    if(color){//Si no esta vacia
+        return auto.color === color;
     }
     return auto;//Si no selecciona nada retorno el auto completo
 }
