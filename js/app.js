@@ -98,8 +98,25 @@ function llenarSelect(){
 function filtrarAuto(){
     const resultado = autos.filter(filtrarMarca).filter(filtrarYear).filter(filtrarMinimo).filter(filtrarMaximo).filter(filtrarPuertas).filter(filtrarTransmision).filter(filtrarColor);// funcion de alto nivel - soportan chainlink
     //console.log(resultado);
-    mostrarAutos(resultado);
+    if (resultado.length) {
+        mostrarAutos(resultado);
+    }
+    else{
+        noResultado();
+    }
+    
 }
+
+//Mostra texto cuando no hubo resultado
+function noResultado(){
+    limpiarHTML();
+
+    const noResultado = document.createElement('div');
+    noResultado.classList.add('alerta','error');
+    noResultado.textContent = 'No hay resultado. Intenta otra vez.';
+    resultado.appendChild(noResultado);
+}
+
 //Solo filtra por marca 
 function filtrarMarca(auto){
     const {marca} = datosBusqueda;
